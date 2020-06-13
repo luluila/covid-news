@@ -17,3 +17,10 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::post('/enduser/register','EndUserController@register');
+Route::post('/enduser/getbyid','EndUserController@show');
+Route::post('/enduser/login','EndUserController@login');
+
+Route::post('/category-news/create','CategoryNewsController@store');
+Route::post('/category-news/getall','CategoryNewsController@getAll');
