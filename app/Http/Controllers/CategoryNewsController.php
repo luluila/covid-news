@@ -96,7 +96,7 @@ class CategoryNewsController extends Controller
 
         $category = getcategorybyname($name);
         if (isset($category)) {
-            $category = App\Models\CategoryNews::find($request->id);
+            $category = CategoryNews::find($request->id);
             if (!isset($category)) {
                 $category->category = $name;
                 $category->save();
@@ -130,7 +130,7 @@ class CategoryNewsController extends Controller
     {
         //
         $id = $request->id;
-        $category = App\Models\CategoryNews::find($request->id);
+        $category = CategoryNews::find($request->id);
         if (isset($category)) {
             $category->delete();
             $message = "berhasil";    

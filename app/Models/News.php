@@ -68,13 +68,4 @@ class News extends Model
 		return $this->belongsTo(Region::class, 'ID_REGION');
 	}
 
-	public function viewer()
-	{
-		return $this->belongsTo(Viewer::class, 'ID_VIEWER');
-	}
-
-	public function viewers()
-	{
-		return $this->hasMany(Viewer::class, 'ID_NEWS');
-	}
 }

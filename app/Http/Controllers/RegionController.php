@@ -2,77 +2,82 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CategorySuffer;
+use App\Models\Region;
 use Illuminate\Http\Request;
 
-class CategorySufferController extends Controller
+class RegionController extends Controller
 {
-    
     public function getall(){
-        $categorys = DB::table('category_suffer')
+        $region = DB::table('region')
                     ->get();
         return response()->json([
             'status' => 'success',
-            'category' => $categorys
+            'region' => $region
         ]);
     }
 
     public function getbyid(Request $request){
-        $category = App\Models\CategorySuffer::find($request->id);
-        if (isset($category)) {
+        $region = App\Models\Region::find($request->id);
+        if (isset($region)) {
             return response()->json([
                 'status' => 'success',
-                'category' => $category
+                'region' => $region
             ]);
         } else {
             return response()->json([
                 'status' => 'failed',
-                'Message' => 'category tidak ditemukan'
+                'Message' => 'daerah tidak ditemukan'
             ]);
         }
     }
 
     public function getbyname(Request $request){
-        $categoryName = $request->name;
-        $category = getcategorybyname($categoryName);
-        if (isset($category)) {
+        $regionName = $request->name;
+        $region = getregionbyname($regionName);
+        if (isset($region)) {
             return response()->json([
                 'status' => 'success',
-                'category' => $category
+                'region' => $region
             ]);
         } else {
             return response()->json([
                 'status' => 'failed',
-                'Message' => 'category tidak ditemukan'
+                'Message' => 'region tidak ditemukan'
             ]);
         }
     }
 
-    public function getcategorybyname($name){
-        $category = DB::table('category_suffer')
-                    ->where('category_suffer',$categoryName)
+    public function getregionbyname($name){
+        $region = DB::table('region')
+                    ->where('region',$regionName)
                     ->get()->first();
-        return $category;
+        return $region;
     }
 
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
     public function store(Request $request)
     {
-        $categoryName = $request->name;
-        $affect = DB::table('category_suffer')
-                ->where('category_suffer',$categoryName)
+        $regionName = $request->name;
+        $affect = DB::table('region')
+                ->where('region',$regionName)
                 ->get()->count();
         if ($affect > 0) {
-            $message = "category sudah ada";
+            $message = "region sudah ada";
         } else {
-            $category = new CategorySuffer();
-            $category->catecategory_suffergory = $categoryName;
-            $category->save();
+            $region = new regionSuffer();
+            $region->region = $regionName;
+            $region->save();
 
             $message = "berhasil";
         }
         return response()->json([
             'status' => $message,
-            'category' => $categoryNews
+            'region' => $regionNews
         ]);
     }
 
@@ -80,7 +85,7 @@ class CategorySufferController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\CategorySuffer  $categorySuffer
+     * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
@@ -88,28 +93,28 @@ class CategorySufferController extends Controller
         $id = $request->id;
         $name = $request->name;
 
-        $category = getcategorybyname($name);
-        if (isset($category)) {
-            $category = App\Models\CategorySuffer::find($request->id);
-            if (!isset($category)) {
-                $category->category = $name;
-                $category->save();
+        $region = getregionbyname($name);
+        if (isset($region)) {
+            $region = App\Models\Region::find($request->id);
+            if (!isset($region)) {
+                $region->category = $name;
+                $region->save();
 
                 return response()->json([
                     'status' => 'success',
-                    'category' => $category
+                    'region' => $region
                 ]);
 
             } else {
                 return response()->json([
                     'status' => 'failed',
-                    'Message' => 'category tidak ditemukan'
+                    'Message' => 'region tidak ditemukan'
                 ]);
             }
         } else {
             return response()->json([
                 'status' => 'failed',
-                'Message' => 'category sudah digunakan'
+                'Message' => 'region sudah digunakan'
             ]);
         }
     }
@@ -117,18 +122,18 @@ class CategorySufferController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\CategorySuffer  $categorySuffer
+     * @param  \App\Models\Region  $region
      * @return \Illuminate\Http\Response
      */
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $category = App\Models\CategorySuffer::find($request->id);
-        if (isset($category)) {
-            $category->delete();
+        $region = App\Models\Region::find($id);
+        if (isset($region)) {
+            $region->delete();
             $message = "berhasil";    
         } else {
-            $message = "category tidak ditemukan";
+            $message = "region tidak ditemukan";
         }
         return response()->json([
             'status' => $message
