@@ -56,3 +56,14 @@ Route::post('/news/popular','NewsController@getpopularnews');
 Route::post('/news/latest','NewsController@getlatestnews');
 Route::post('/news/foryou','NewsController@getforuser');
 
+//getbydate
+Route::post('/graphic-info/daily','GraphicInfoController@getbydate');
+Route::post('/graphic-info/total','GraphicInfoController@getallinfo');
+Route::post('/graphic-info/total-by-region','GraphicInfoController@getinfobyregion');
+Route::post('/graphic-info/create','GraphicInfoController@store');
+Route::post('/graphic-info/update','GraphicInfoController@update');
+Route::post('/graphic-info/delete','GraphicInfoController@delete');
+
+
+
+
