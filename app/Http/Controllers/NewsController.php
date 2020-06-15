@@ -164,7 +164,7 @@ class NewsController extends Controller
                     'content'=>$content,
                     'updated_at'=>Carbon::now()
                 ]);
-            $message = "berhasil diupdate"
+            $message = "berhasil diupdate";
         } else {
             $message = "judul telah digunakan";
         }
@@ -182,7 +182,7 @@ class NewsController extends Controller
     public function destroy(Request $request)
     {
         $id = $request->id;
-        $news = News::find($id)
+        $news = News::find($id);
         if (isset($news)) {
             $news->delete();
             $message = "berhasil";    

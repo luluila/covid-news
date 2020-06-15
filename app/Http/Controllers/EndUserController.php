@@ -55,7 +55,8 @@ class EndUserController extends Controller
         $role = RoleUser::find($request->role);
         $region = Region::find($request->region);
 
-        if (findUserByEmail($email) != 0) {
+        $affect = DB::table('end_user')->where('email', $email)->get()->count();
+        if ($affect != 0) {
             if (strcmp($password, $rePassword) !== 0) {
                 $response = "password didn't match";
             } else {
@@ -95,12 +96,6 @@ class EndUserController extends Controller
         
     }
 
-
-    public function findUserByEmail($email){
-        $affect = DB::table('end_user')->where('email', $email)->get()->count();
-        return $affect;
-    }
-
     /**
      * Update the specified resource in storage.
      *
@@ -117,8 +112,9 @@ class EndUserController extends Controller
         $region = $request->input('region');
 
         $endUser = EndUser::find($id);
+        $affect = DB::table('end_user')->where('email', $email)->get()->count();
         if (isset($email)) {
-            if (findUserByEmail($email) != 0) {
+            if ($affect != 0) {
                 $response = "user already exist, use another email";
             } else {
                 if ($endUser != null) {
